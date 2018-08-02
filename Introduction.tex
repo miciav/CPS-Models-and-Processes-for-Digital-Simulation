@@ -1,0 +1,48 @@
+In the manufacturing context, simulation refers to a ample spectrum of methodologies, techniques, and resulting software applications aimed at modeling and analyzing, through simulated experiments, the behavior of real production systems \cite{chung2003simulation, bangsow2010manufacturing}. 
+The availability of models and tools to support the execution of accurate simulations of backbone processes in manufacturing is widely acknowledged as essential to making informed operational decisions at the shop floor level. 
+Moreover, the high complexity of distributed value networks calls for reactive management systems that extend beyond the single company borders and disciplinary domains, envisioning the application of simulation tools at the core of novel cooperative digital environments. 
+
+Historically, simulation solutions have been relegated only in the initial phases of factory design or in specific analyses targeting separated factory domains such as process validation, optimization of production layouts, scheduling and purchasing forecast~\cite{fowler2004grand}.
+This limited scope stems from the fact that the application of simulation techniques to a traditional shop has proven to be a challenging and resource-eager activity, whereas the underlying models are often very sensitive to even small variations of context parameters resulting in time-increasing prediction errors. 
+Consequently, the simulation has been regarded as some sort of chimera that promises great benefits and yet has never been really suitable for operative and reactive decisions. 
+
+Nonetheless, the landscape is on the verge of a radical change thanks to the disruptive transformations witnessed in recent years and that are known by the term \textit{Industry 4.0} (I4.0)~\cite{Lu2017}. In particular, many players have adopted (or are in the process of adopting) approaches and methodologies typical of the Information and Communication Technology (ICT) industry with the aim of creating the factory of the future where the use of innovative technologies such as \textit{Machine Learning}, \textit{Big Data} and the \textit{Internet of Things}will be at the service of future production and managerial operations~\cite{Witkowski2017,Xu2014}.
+In this context, the shop floor is redefined and envisioned as populated by self-monitoring fast-reconfigurable objects (mainly, machinery and robots), often referred to as \textit{Cyber-Physical Systems} (CPSs)~\cite{Jazdi2014}, equipped with computational resources and capable of establishing a capillary sensing of the shop floor by sharing their state information as well as coordination signals with other (even geographically distributed) stakeholders. 
+Indeed, through different connection media (e.g., the RAMI 4.0 data buses~\cite{hankel2015reference}) this information can be exchanged, stored, and eventually used to finally achieve, among other things, reliable and accurate simulations in all phases of the factory life cycle. 
+Moreover, since computational and reasoning capabilities are distributed with CPSs, 
+the classical paradigm of simulation can be overturned by distributing the burden among the various CPS living in the Smart Factory~\cite{Lee2015,Hozdic2015} (i.e. gateways, production machinery, robots) exploiting emerging paradigms such as the \textit{Edge Computing}~\cite{georgakopoulos2016internet}. Such a scenario would have the undisputed advantage of increasing reactivity (because data movement is reduced) and simulation precision (each element could self-simulate using very accurate models because they are developed by the same machine manufacturers). 
+
+
+Withal, thanks to the real-time and ubiquitous availability of information, the distance between the simulation run-time and the real factory situation results shortened. 
+This enables the harnessing of digital avatars (a.k.a. \textit{Digital Twins}~\cite{Uhlemann2017}) to represent and interact with every actor involved in the manufacturing process; if a sufficient degree on composability is featured by such digital objects, even the whole shop floor can be mirrored in real-time within a simulation setup.   
+The ability to mirror of real elements into their virtual representation, will enable the forthcoming platforms to simulate on top of constantly updated data, thus exploiting the full potentials of simulation; next generation solutions will, therefore, no more be relegated to the factory design and planning phases but exploited in the everyday work. In fact, if from one side the traditional approach based on \textit{what-if} scenarios, where the effect of (re-)design choices are analyzed without having to involve the real shop floor, will benefit from more accurate and fresh data, on the other hand this will provide support to \textit{now-what} decision-making processes, currently outside the boundaries of simulation, such as reactive reallocation of production resources to balance the production following an unexpected event or ensuing the on-time delivery of customer orders by reducing the effect of uncertainties.
+
+
+Notwithstanding the staggering undertakings witnessed in these recent years, as pointed out in~\cite{pedrazzoli2014simulation}, there exist still relevant challenges affecting the maturity level in the adoption of I4.0 enablers in simulation and forecasting. 
+Firstly, although high-performing computing services are available in the Cloud, simulation still under-exploits them, being almost always stuck in a centralized and localized vision that fails to take advantage of the opportunities offered by a distributed (Cloud) and, recently, on-board (Edge computing) paradigms.
+Even the game-changing possibility to reliably collect and use in real-time data to mirror the factory is not currently exploited within simulation tools still struggling in the definition of virtual factory models~\cite{ciavotta2017microservice}.
+Lack of flexible and extensible data models are hindering the emergence of multi-disciplinary simulation technologies to support the virtual investigation in a holistic perspective that promotes decision-making processes enriched by the analysis of the multiple domains interacting within the factory~\cite{hehenberger2016design}.
+Ultimately, digital models need to evolve coherently with production systems along their life-cycles to leap over both punctual and paradigmatic transformations taking place in the shop floor and in the  information systems that support them \cite{azab2012simulation}.
+
+
+This chapter discusses how it is possible to improve the reliability of simulations forecasting using real-to-digital synchronization functionalities. 
+
+\textbf{fino qui... manca accenno ai contenuti del capitolo}
+- - - - - - - -
+
+Task 4.2 “Real to Digital Synchronization Functionalities” is meant to develop the synchronization- functionalities between the real world and its digital twin. Therefore, starting from the overall edge architecture defined in the context of WP3 and described in D3.1, activities focused on the interface between the Edge Tier and the Cloud Tier and how the information exchanged can be used in order to update the factory model.
+
+------- 
+
+DAl 4.5
+
+
+Considering the general architecture of the project, “Simulation Services” are services managed in the Cloud Tier for the purpose of supporting external simulators to access the information contained in the platform. 
+In order to ensure the maximum level of interoperability, an intermediate level of adaptation is envisaged, allowing potentially any simulation software to interface with the system.
+These two tasks made available the infrastructure for the digital representation of the shop floor and provide the component that allows to keep the digital part synchronized with the real factory.
+
+
+
+
+The objective of this document is to present the parts needed in order to expose an endpoint for a generic simulation application and to reach a complete integration with the simulators of the project's partners. The deliverable is therefore organized in three main sections:
+

@@ -54,10 +54,13 @@ In the context of industry 4.0, where factory components become more and more in
 
 \section{Introduction} 
 (\textbf{Michele})
-\input{Introduction.tex}
+\input{sections/Introduction.tex}
 
-\section{FAR-EDGE: Edge computing and simulation of the factory of the future }
+\section{FAR-EDGE: Edge computing and Simulation for the Smart Factory}
+\input{sections/project.tex}
 
+\section{A Model for Simulation and Digital Continuity}
+\input{sections/model.tex}
 
 \section{Literature Review}
 (\textbf{Andrea})
@@ -67,17 +70,17 @@ brief literature review sistemi plug-and-simulate
 
 \section{Real-to-digital system}
 (\textbf{Gabriele})
-\input{R2DS.tex}
+\input{sections/R2DS.tex}
 
 \subsection{Architecture}
 (Ha cominciato michele, per favore riguardare ed estendere \textbf{Andrea}) \textbf{Gabriele}
-\input{R2DArchitecture.tex}
+\input{sections/R2DArchitecture.tex}
 
 
 
 \section{Case Study}
 (Ha cominciato michele, per favore riguardare ed estendere \textbf{Andrea} \textbf{Gabriele}
-\input{CaseStudy.tex}
+\input{sections/CaseStudy.tex}
 
 \section{The other side of the coin: digital-to-real}
 (\textbf{Michele})
@@ -85,10 +88,10 @@ L'idea che abbiamo sviluppato dietro requisito di siemens è di avere un meccani
 dei trigger. Sono degli eventi che possono essere applicati alle operazioni che possono avvenire sul datamodel (in particolare mi verrebbe da dire che abbia senso piu' su save/update che su retrieve etc..) in sostanza sarà possibile applicare un trigger ad una operazione con un comando del tipo  onEvent: save, where attribute1=4 callback=url....in maniera tale che venga fatta una chiamata all'url specificato nella registrazione. il sistema che riceve la callback (ad esempio il simulatorAdaptationTier) in questo modo saprà che dovrà ricaricarsi i dati dal datamodel o fare altri tipi di ragionamenti. 
 Il tutto si risolve a livello di comportamenti del software mentre il datamodel rimane trasparente a tutto cio'. E qui si puo' eventualmente spiegare della perpendicoalrità tra requisiti funzionali e non.
 
-\input{VisionRealToDigital.tex}
+\input{sections/VisionRealToDigital.tex}
 
 \section{Conclusions}
-
+\input{sections/conclusions.tex}
 %\appendix
 
 %And this is my Appendix.

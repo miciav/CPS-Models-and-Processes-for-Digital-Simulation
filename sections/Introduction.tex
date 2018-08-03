@@ -30,18 +30,6 @@ The rest of the chapter is structured as follows...
 
 
 
-FAR-EDGE’s fundamental goal is to devise and develop an Edge computing solution for the virtualization of the factory automation pyramid, in order to support strategically production-related activities during all phases of the engineering and factory life cycle. This objective entails the definition and realization of several software layers serving three high-level functional domains namely, \textit{Automation}, \textit{Analytics}, and \textit{Simulation} (see Figure~\ref{fig:architecture}) to meet the global challenges of mass-customization and reshoring.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=\linewidth]{images/Far-edge.png}
-	\caption{FAR-EDGE Reference Architecture overall view}
-	\label{fig:architecture}
-\end{figure}
-
-As far as simulation is concerned FAR-EDGE aims at providing models and tools entailing functionalities for modeling CPS-based discrete manufacturing factories and simulating their behavior along the factory life cycle. 
-In the FAR-EDGE vision, in fact, simulation is treated as a first-class citizen (as it is in Industrie 4.0 guidelines), being an enabler to implement layout and product optimization as well as to test what-if scenarios at minimal impact of regular shop activities. 
-One of the main challenges of simulation in manufacturing is the so-called “Digital Continuity”. It consists in creating the conditions for a model to be up-to-date at any moment during the various phases of the life cycle of a factory. Thus, if from one hand this means that the interoperability of the model for virtualization and simulation must be maximized (engineering is by-nature a multidisciplinary process), from the other new mechanisms must be developed and put in place to allow the model to be in-synch with the shop floor evolving as automatically as possible with the state of the factory. As CPSs are subject to changes (e.g., for straining and aging), models should reflect those transformations. To detect this gap and update the model accordingly, raw data from the field (direct) or complex analysis algorithms (from Analytics domain) can be used. However, it is important to point out that the model itself must support model synchronization functionality natively in order to decouple the FAR-EDGE architecture, which must be independent of the particular factory, and the synchronization process that depends on the particular configuration of the factory at hand and ultimately on the model. 
-For all the reasons presented above, the task of defining a suitable model is very ambitious; not only we aim at including in a single harmonic, coherent representation control, communication data collection and simulation data, but also at defining and being able to share a model describing the synchronization process.
 
 

@@ -15,6 +15,9 @@
 % also tested with natbib
 
 \newtheorem{guess}{Conjecture}
+\usepackage{booktabs}
+\usepackage{pdflscape}
+\usepackage{rotating}
 
 % A copyright block
 \booktitle{An Edited Volume}
@@ -61,35 +64,24 @@ In the context of industry 4.0, where factory components become more and more in
 \section{A Model for Simulation and Digital Continuity}\label{sec:model}
 \input{sections/model.tex}
 
-\section{Literature Review}
-(\textbf{Andrea})
+%\section{Literature Review}
+%(\textbf{Andrea})
+%brief literature review sistemi plug-and-simulate
 
-brief literature review sistemi plug-and-simulate
 
-
-\section{Real-to-digital system}
-(\textbf{Gabriele})
+\section{Real-to-Digital Synchronization System}
 \input{sections/R2DS.tex}
 
-\subsection{Architecture}
-(Ha cominciato michele, per favore riguardare ed estendere \textbf{Andrea}) \textbf{Gabriele}
+\subsection{The Architecture}\label{sec:architecture}
 \input{sections/R2DArchitecture.tex}
 
 
 
-\section{Case Study}
+\section{Case Study}\label{sec:caseStudy}
 (Ha cominciato michele, per favore riguardare ed estendere \textbf{Andrea} \textbf{Gabriele}
 \input{sections/CaseStudy.tex}
 
-\section{The other side of the coin: digital-to-real}
-(\textbf{Michele})
-L'idea che abbiamo sviluppato dietro requisito di siemens è di avere un meccanismo che permetta di registrare 
-dei trigger. Sono degli eventi che possono essere applicati alle operazioni che possono avvenire sul datamodel (in particolare mi verrebbe da dire che abbia senso piu' su save/update che su retrieve etc..) in sostanza sarà possibile applicare un trigger ad una operazione con un comando del tipo  onEvent: save, where attribute1=4 callback=url....in maniera tale che venga fatta una chiamata all'url specificato nella registrazione. il sistema che riceve la callback (ad esempio il simulatorAdaptationTier) in questo modo saprà che dovrà ricaricarsi i dati dal datamodel o fare altri tipi di ragionamenti. 
-Il tutto si risolve a livello di comportamenti del software mentre il datamodel rimane trasparente a tutto cio'. E qui si puo' eventualmente spiegare della perpendicoalrità tra requisiti funzionali e non.
-
-
-\textbf{del materiale c'è nel d4.2} 
-
+\section{The vision: digital-to-real}
 \input{sections/VisionRealToDigital.tex}
 
 \section{Conclusions}

@@ -7,7 +7,7 @@ In other words, the data model has been designed with the goal of :
 
 The Real-to-Digital Synchronization can be defined as the process of continuously updating the CPS digital twins stored in the \textit{Model Repository}, following the evolution of the shop floor. 
 Clearly, having reliable models is especially important in simulation. 
-In fact, machines along their life cycle are subject to aging, straining, and reconfiguration processes, which might affect their behavior and performance; in this case the simulation outcomes to drift apart substantially from reality and, therefore, result useless. 
+In fact,along their life cycle machines are subject to aging, straining, and reconfiguration processes, which might affect their behavior and performance; in this case, the simulation outcomes drift apart substantially from reality and, therefore, result useless. 
 In order to be able to make informed decisions it is of paramount importance to detect divergences in the model \textit{automatically} (because given the number of  potentials CPS in the shop it can be unfeasible for this activity to be done manually) and \textit{continuously} (simulation can be sensitive to even small parameter changes), and to adapt parameters and scenarios accordingly. 
 
 The core of the R2DS grounds in the processing of data gathered at shop floor level. 
@@ -15,7 +15,10 @@ It is worth noticing that this is a general approach, based on data processing, 
 For illustration purposes, let's imagine the case in which a digital twin is extended with the results of a machine learning algorithm designed for predictive maintenance~\cite{daily2017predictive}. 
 Ideally, this algorithm is no different from those that track parameters to avoid drift and its outcome can be stored as property of the related digital twin  to be used from the simulation to schedule the most suitable time to perform the maintenance of the real machine.  
 
-In order to achieve the most general and adaptable system possible, the simulation system has been designed and built in such a way as to be agnostic of the particular data collection and analysis system provided by the "analytics" domain of the architecture. In particular, as mentioned when the model was presented, third-party tools may require different and/or proprietary models and languages in order to be used. Therefore, while fully supporting the reference implementation of the FAR-EDGE architecture, it was decided to introduce the concept of synchronization directly within the simulation model. The \textit{Synchronization Model} (SM), a particular \textit{artifact} (and as such independent from the platform), has been defined specifically for the implementation of the synchronization process at the level of the single digital twin.
+In order to achieve the most general and adaptable system possible, the simulation system has been designed and built in such a way as to be agnostic of the particular data collection and analysis system provided by the \textit{analytics} domain of the architecture. In particular, as mentioned when the model was presented, third-party tools may require different and/or proprietary models and languages in order to be used. Therefore, while fully supporting the reference implementation of the FAR-EDGE architecture, it was decided to introduce the concepts of \textit{Synchronization Model} and \textit{Trigger} directly within the simulation model. 
+
+\subsection{The Synchronization Model}
+The \textit{Synchronization Model} (SM), a particular \textit{artifact} (and as such independent from the platform), has been defined specifically for the implementation of the synchronization process at the level of the single digital twin.
 This is because each digital twin might require a different data processing  to be synchronized with its real counterpart. 
 
 Figure~\ref{fig:sm-diagram} presents one of the sub-models of the core model presented in Section~\ref{sec:model}. In particular, the synchronization model can be seen alongside more commonly used simulation artifacts (kinematic model, logic model, geometry). 
@@ -32,7 +35,6 @@ Synchronization Models describe the way data from the field must be processed to
 A synchronization model contains an algorithmic description of how to process data from machine sensors at shop floor level in order to generate updates that continuously serve to keep the digital twin digital in sync with the related CPS. 
 This description can therefore be instantiated in different ways depending on the technological choices that underlie the implementation of the platform. 
 The solution adopted in the project is to implement the synchronization model in the form of a simulation asset, that is a binary file containing executable code and to associate it with the representation of a CPS within the data model. The synchronization model, therefore, in order to perform its duty, must be compiled, installed and managed within a suitable execution environment, which can provide through an API the abstractions necessary to process data coming from the production environment in a distributed way.  
-
 
 Specific components will be in charge of managing the life cycle of Synchronization Models, which includes: 
 \begin{enumerate}
@@ -67,3 +69,69 @@ It is worth restating at this point that the algorithm implemented within a SM i
 \end{figure}
 
 
+\subsection{The Trigger Mechanism}
+While the synchronization model is responsible for adjusting the digital twins to provide the simulation platform with an up-to-the-minute factory status to keep high the predictive capacity of the ensemble, the trigger is responsible for notifying other systems of the occurrence of events. Machine failure or production delays as well as exceeding a critical threshold for a monitored measurement are examples of events that may occur. In such situations, it may be necessary to take countermeasures (which do not necessarily involve simulation). To this end, we have designed a data-level system capable of defining events, condition and actions in reaction to  in a generic way. The platform will then continuously check the condition and, in case the related event occurred, perform the associated action. 
+
+In the Table~\ref{tb:trigger} is reported the description of a standard trigger element with its mandatory attributes. 
+
+\begin{table}[h]
+\begin{tabular}{@{}l|l|p{65mm}@{}}
+\toprule
+\textbf{Attribute Name} & \textbf{Attribute Type} & \textbf{Description} \\ \midrule
+ \textit{triggerName}   & String & The unique identifier of a trigger \\
+ \textit{onEvent}       & String & The name of the event the platform has to check for the occurrence. Examples are \textit{onSaveElement}, \textit{onSaveAttribute}, etc.            \\
+ \textit{condition}          & String & A logical expression compliant with a simplified grammar. The condition is read by a parser and evaluated if the event occurred.\\ 
+ \textit{action}                     &  String              & The identifier of the action (selected from a defined catalogue) to be executed if the condition is fulfilled (e.g., callback).       \\ \bottomrule
+\end{tabular}%
+\caption{Mandatory Attributes for trigger creation}
+\label{tb:trigger}
+\end{table}
+
+Please notice that to enabling the definition of logical conditions, a simple grammar based on the conditional operators and, or, and equality/relational operators equals, greater than, less than has been defined. In order to permit to store these condition as serialized value, the logical expressions are constructed in accordance with the described directives in \textit{JsonLogic}\footnote{JsonLogic.com}.
+
+
+Additionally, depending on the kind of action to be registered other attributes might be necessary. In Table~\ref{tb:triggerEx} is reported an example of a trigger configuration that executes a callback action calling a predefined URI when activated. This particular example is triggered in the case of a new bay is added to the shop floor (see Section~\ref{sec:caseStudy} for more details). If the save of a new element of archetype equals to BAY is executed, the trigger is activated. Finally, a callback is then made calling the specified URI. Such an URI might represent and endpoint exposed by the \textit{Simulator Adaptation Tier} (an interface component that integrates the particular simulator) and which for instance will load the new data from the virtualization platform and run a new simulation repeating the loop. More details on the adaptation tier can be found in \cite{FAR-EDGE45}.
+
+\begin{table}[h]
+\begin{tabular}{@{}l|l@{}}
+\toprule
+\textbf{Attribute Name} & \textbf{Description} \\ \midrule
+ \textit{triggerName}   & newBayTrigger             \\
+ \textit{onEvent}       & saveElement            \\
+ \textit{condition}     & Eq(archetype,BAY)            \\ 
+ \textit{action}        & \textbf{callback}         
+ \\ 
+\textit{callback.URI}   & http://.....            \\ 
+\bottomrule
+\end{tabular}%
+\caption{Specific trigger configuration}
+\label{tb:triggerEx}
+\end{table}
+
+
+
+In the remainder of this section the functioning of the trigger mechanism is analyzed. The sequence diagram presented in Figure~\ref{fig:triggerSequence2} presents in details the sequence of calls associated with the execution of a trigger. The calls are executed when an event (in the example presented in the figure a save operation is performed) modifies the data model. 
+
+\begin{sidewaysfigure}
+\includegraphics[width=\textheight]{images/trigger2.png}
+  \caption{Sequence diagram save command execution with trigger mechanism}
+  \label{fig:triggerSequence2}
+\end{sidewaysfigure}
+
+Below is a brief description of the components and functionalities involved:
+\begin{description}
+\item \textbf{OpenApiController}: this is the component responsible for exposing the end point of the functionality, in this case saving the element within the data model.
+\item \textbf{DataModelFacade}: it receives and validates the payload of the request. Subsequently, it invokes the \textit{CommandHandler} responsible for the management of the data model.
+\item \textbf{CommandHandler}: this is the behavioral manager of the data model system. It is in charge of indentifying the request and executed the related command. Its implementation is flexible and new functionalities can be exposed by adding new commands compliant with \textit{AbstractCommand} abstract class.
+\item \textbf{VerifyConditionCommand}: This object is responsible for checking the condition of the trigger. Essentially, it scrolls through the list of all the rules that have been configured, validating the conditions linked to a certain event and using the input data stored with the trigger.
+
+\item \textbf{SaveElementCommand}: is the implementation of \textit{AbstractCommand} that allows saving element data using the \textit{AbstractRepository} persistence interface. It also handles all exceptional scenarios due to persistence problems.
+\item \textbf{ElementRepository}: is responsible for managing the CRUD operations on a persistent storage.
+\item \textbf{CallBackCommand}:  If a condition is valid also the CallBackCommand is executed using the condition rule attributes as parameter.
+\end{description}
+	
+
+
+
+
+Certainly the above example is applicable not only to the \textit{SaveElementCommand} but also to the other commands that act on the data-model, such as: \textit{SaveAttributesCommand}, \textit{SaveLayerCommand}, etc.
